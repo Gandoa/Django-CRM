@@ -1,0 +1,76 @@
+{%extends 'base.html'%}
+{%block content%}
+<style>
+  .headt {
+    background-color: rgb(6, 152, 249);
+    color: aliceblue;
+
+  }
+</style>
+{% if user.is_authenticated%}
+<h1>
+    Records....
+
+
+</h1>
+
+<table class="table table-striped table-hover table-bordered">
+  <thead class="headt">
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Email</th>
+      <th scope="col">numéro</th>
+      <th scope="col">Quartier</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+{% if records %}
+	{% for record in records %}
+		<tr>
+			<td>{{ record.nom }} {{ record.prénom }}</td>
+			<td>{{ record.email }}</td>
+			<td>{{ record.numéro }}</td>
+			<td>{{ record.addresse }}</td>
+			<td>{{ record.created_at }}</td>
+			<td><a href="{% url 'record' record.id %}">{{ record.id }}</a></td>
+		</tr>
+	{% endfor %}
+
+{% endif %}
+	
+	  </tbody>
+	</table>
+
+
+
+
+
+{% else %}
+<!-- <div class="col-md-6 offset-md-3"> -->
+    <h1> Connection </h1>
+
+    <form method="POST" action="{%url 'home'%}">
+        {%csrf_token%}
+
+        <br>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nom d'utilsateur</label>
+              <input type="text" class="form-control" name="username" placeholder="entrez votre nom d'utilsateur" required> 
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Mot De Passe</label>
+              <input type="password" class="form-control" name="password" placeholder="entrez votre mot de passe" required>
+            </div>
+            <button type="submit" class="btn btn-primary">connectez-vous</button>
+
+    </form>
+
+<!-- </div> -->
+
+{%endif %}
+
+
+{%endblock%}
